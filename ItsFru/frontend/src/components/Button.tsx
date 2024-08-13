@@ -5,11 +5,12 @@ type ButtonProps = {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  className?: string; // className prop 추가
 };
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false }) => {
+const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, className }) => {
   return (
-    <button className={styles.button} onClick={onClick} disabled={disabled}>
+    <button className={`${styles.button} ${className}`} onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );

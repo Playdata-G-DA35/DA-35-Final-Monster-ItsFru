@@ -1,0 +1,84 @@
+
+.signupContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e0f7e9; /* 연두색 배경 */
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.container .checkboxContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  color: #333;
+}
+
+.container .checkboxLabel {
+  margin-left: 5px;
+}
+
+.button {
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #333;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #eee;
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.inputContainer {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  position: absolute;
+  bottom: -1.25rem; /* 에러 메시지가 입력 필드 아래에 위치하도록 설정 */
+  left: 0;
+  visibility: hidden; /* 기본적으로 숨김 처리 */
+}
+
+.errorVisible {
+  visibility: visible; /* 에러가 있을 때만 보이도록 설정 */
+}
+
+.loginText {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.loginLink {
+  cursor: pointer;
+  text-decoration: underline;
+}

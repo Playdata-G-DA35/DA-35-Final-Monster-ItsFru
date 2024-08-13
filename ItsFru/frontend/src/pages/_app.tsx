@@ -1,9 +1,14 @@
+// pages/_app.tsx
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import '../styles/globals.css';
+import '@styles/globals.css';
+import Layout from '@components/Layout'; // Layout 컴포넌트 import
 
-const ItsFru = ({ Component, pageProps }: AppProps) => {
+const ItsFru = ({ Component, pageProps, router }: AppProps) => {
+    // index 페이지를 제외한 모든 페이지에 Layout 적용
+    const isLandingPage = router.pathname === '/';
+
     return (
         <>
             <Head>
@@ -13,7 +18,13 @@ const ItsFru = ({ Component, pageProps }: AppProps) => {
                 <link rel="manifest" href="/manifest.json" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Component {...pageProps} />
+            {isLandingPage ? (
+                <Component {...pageProps} />
+            ) : (
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            )}
         </>
     );
 };
