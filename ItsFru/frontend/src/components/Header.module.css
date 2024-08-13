@@ -1,0 +1,12 @@
+/* Header.module.css */
+.navLink {
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s;
+}
+
+.navLink:hover {
+  text-decoration: underline;
+  color: #ffcc00;
+}

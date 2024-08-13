@@ -1,33 +1,74 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* 기본 스타일 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9fbe7; /* 연두색 배경 */
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden; /* 수평 스크롤 제거 */
+}
+
+/* 제목 스타일 */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #4e9e3b; /* 진한 초록색 */
+  margin-bottom: 10px;
+}
+
+/* 링크 스타일 */
+a {
+  color: #4e9e3b;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #3b7a2a;
+}
+
+/* 공통 버튼 스타일 */
+button {
+  font-family: inherit;
+  font-size: 16px;
+  background-color: #ffcc00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #ffdb44;
+}
+
+/* 공통 입력 필드 스타일 */
+input, textarea {
+  font-family: inherit;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 600px) {
+  body {
+      padding: 10px;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  button {
+      width: 100%;
   }
 }
