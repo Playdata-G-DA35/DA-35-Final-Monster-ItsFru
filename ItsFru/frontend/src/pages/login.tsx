@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from '@styles/login.module.css';
+import Button from '@components/Button'; // Button 컴포넌트 import
+import Input from '@components/Input'; // Input 컴포넌트 import
 
-interface LoginProps {
-  // 필요한 props 정의
-}
-
-const Login: React.FC<LoginProps> = () => {
+const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     if (password === '1111') {
       alert('로그인 성공!');
+      sessionStorage.setItem('isLoggedIn', 'true');
+      router.push('/main');
     } else {
       setError('입력하신 내용과 일치하는 계정이 없습니다. 다시 입력해주세요.');
     }
   };
-
+  
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+  
   return (
     <div className={styles.loginContainer}>
       <h1 className={styles.title}>로그인</h1>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <InputField label="이메일" type="email" value={email} onChange={setEmail} />
-        <InputField label="비밀번호" type="password" value={password} onChange={setPassword} />
-        <button type="submit" className={styles.button}>로그인</button>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
+        <Input name="email" type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <Input name="password" type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <Button type="submit" label="로그인" className={styles.button} /> {/* onClick 제거 */}
       </form>
       {error && <div className={styles.error}>{error}</div>}
       <div className={styles.socialLogin}>
-        <button className={styles.socialButton}>Google로 로그인</button>
-        <button className={styles.socialButton}>Facebook으로 로그인</button>
+        <Button label="Google로 로그인" onClick={() => {}} className={styles.socialButton} />
+        <Button label="Facebook으로 로그인" onClick={() => {}} className={styles.socialButton} />
       </div>
       <div className={styles.findInfo}>비밀번호를 잊으셨나요?</div>
       <div className={styles.signupLink}>
-        <span>계정이 없으신가요? </span>
+        <span>아직 계정이 없으신가요? </span>
         <Link href="/signup" className={styles.signupText}>
           회원가입
         </Link>
@@ -43,23 +49,5 @@ const Login: React.FC<LoginProps> = () => {
     </div>
   );
 };
-
-interface InputFieldProps {
-  label: string;
-  type: string;
-  value: string;
-  onChange: (value: string) => void;
-}
-
-const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange }) => (
-  <div style={{ position: 'relative' }}>
-    <label>{label}</label>
-    <input
-      type={type}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    />
-  </div>
-);
 
 export default Login;

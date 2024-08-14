@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.left}>
-        <Link href="/" className={styles.link}>메인화면</Link>
+        <Link href="/main" className={styles.link}>메인화면</Link>
       </div>
       <div className={styles.right}>
         <Link href="/" className={styles.link}>마이페이지</Link>
