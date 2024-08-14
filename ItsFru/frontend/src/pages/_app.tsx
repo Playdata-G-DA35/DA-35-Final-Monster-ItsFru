@@ -1,12 +1,11 @@
-// pages/_app.tsx
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import 'tailwindcss/tailwind.css';
 import '@styles/globals.css';
-import Layout from '@components/Layout'; // Layout 컴포넌트 import
+import { Layout } from '../components';
 
 const ItsFru = ({ Component, pageProps, router }: AppProps) => {
-    // index 페이지를 제외한 모든 페이지에 Layout 적용
     const isLandingPage = router.pathname === '/';
 
     return (
@@ -18,13 +17,15 @@ const ItsFru = ({ Component, pageProps, router }: AppProps) => {
                 <link rel="manifest" href="/manifest.json" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            {isLandingPage ? (
-                <Component {...pageProps} />
-            ) : (
-                <Layout>
+            <div className="min-h-screen">
+                {isLandingPage ? (
                     <Component {...pageProps} />
-                </Layout>
-            )}
+                ) : (
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                )}
+            </div>
         </>
     );
 };

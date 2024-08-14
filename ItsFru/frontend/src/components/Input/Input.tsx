@@ -1,23 +1,25 @@
-import React from 'react';
-import styles from './Input.module.css';
+// Input.tsx (또는 Input 컴포넌트가 정의된 파일)
 
-type InputProps = {
-  name: string; // name 속성 추가
+import React, { ChangeEvent } from 'react';
+
+interface InputProps {
+  name: string;
   type: string;
   placeholder: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  className?: string; // className 속성 추가
+}
 
-const Input: React.FC<InputProps> = ({ name, type, placeholder, value, onChange }) => {
+const Input: React.FC<InputProps> = ({ name, type, placeholder, value, onChange, className }) => {
   return (
     <input
-      className={styles.input}
-      name={name} // name 속성 추가
+      name={name}
       type={type}
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      className={className} // className 적용
     />
   );
 };

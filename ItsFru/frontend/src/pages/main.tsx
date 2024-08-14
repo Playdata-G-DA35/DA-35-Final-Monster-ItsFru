@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Button from '@components/Button/Button'; // 버튼 컴포넌트 import
+import { Button } from '@components'; // 버튼 컴포넌트 import
 import styles from '@styles/Main.module.css';
 
 const Main: React.FC = () => {

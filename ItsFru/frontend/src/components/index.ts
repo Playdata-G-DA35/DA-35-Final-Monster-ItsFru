@@ -1,10 +1,12 @@
-export { default as Button } from './Button/Button';
-export { default as Card } from './Card/Card';
-export { default as Footer } from './Footer/Footer';
-export { default as Header } from './Header/Header';
-export { default as Input } from './Input/Input';
-export { default as Layout } from './Layout/Layout';
-export { default as Modal } from './Modal/Modal';
-export { default as Spinner } from './Spinner/Spinner';
-export { default as Tap } from './Tap/Tap';
-export { default as Toast } from './Toast/Toast';
+// src/components/index.ts
+export { default as Button } from './Button';
+export { default as Card } from './Card';
+export { default as Footer } from './Footer';
+export { default as Header } from './Header';
+export { default as Input } from './Input';
+export { default as Layout } from './Layout';
+export { default as Modal } from './Modal';
+export { default as Spinner } from './Spinner';
+export { default as Tap } from './Tap';
+export { default as Toast } from './Toast';
+export { default as LogoutButton } from './LogoutButton';

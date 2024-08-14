@@ -1,50 +1,105 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import styles from '@styles/login.module.css';
-import Button from '@components/Button'; // Button 컴포넌트 import
-import Input from '@components/Input'; // Input 컴포넌트 import
+import axios, { AxiosError } from 'axios';
+import { Button, Input } from '@components';
+
+interface State {
+  email: string;
+  password: string;
+  error: string;
+}
+
+type Action =
+  | { type: 'SET_EMAIL'; payload: string }
+  | { type: 'SET_PASSWORD'; payload: string }
+  | { type: 'SET_ERROR'; payload: string };
+
+const initialState: State = {
+  email: '',
+  password: '',
+  error: '',
+};
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET_EMAIL':
+      return { ...state, email: action.payload };
+    case 'SET_PASSWORD':
+      return { ...state, password: action.payload };
+    case 'SET_ERROR':
+      return { ...state, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+const login = async (email: string, password: string) => {
+  const response = await axios.post('http://localhost:8000/login', { email, password });
+  return response.data;
+};
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [state, dispatch] = useReducer(reducer, initialState);
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
-    if (password === '1111') {
+  const handleSubmit = async () => {
+    try {
+      const user = await login(state.email, state.password);
       alert('로그인 성공!');
       sessionStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('userRole', user.role);
       router.push('/main');
-    } else {
-      setError('입력하신 내용과 일치하는 계정이 없습니다. 다시 입력해주세요.');
+    } catch (error) {
+      const err = error as AxiosError<{ detail: string }>; // AxiosError의 제네릭 타입을 사용하여 detail 속성 정의
+      const errorMessage = err.response?.data?.detail || '로그인에 실패했습니다. 다시 시도해주세요.';
+      dispatch({
+        type: 'SET_ERROR',
+        payload: errorMessage,
+      });
+      dispatch({ type: 'SET_PASSWORD', payload: '' });
     }
   };
-  
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSubmit();
+    setLoading(true);
+    await handleSubmit();
+    setLoading(false);
   };
-  
+
   return (
-    <div className={styles.loginContainer}>
-      <h1 className={styles.title}>로그인</h1>
-      <form className={styles.form} onSubmit={handleFormSubmit}>
-        <Input name="email" type="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Input name="password" type="password" placeholder="비밀번호" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <Button type="submit" label="로그인" className={styles.button} /> {/* onClick 제거 */}
+    <div className="max-w-sm mx-auto p-5 bg-green-100 rounded border border-gray-300">
+      <h1 className="text-center text-gray-800 mb-5 font-bold">로그인</h1>
+      <form className="flex flex-col gap-4" onSubmit={handleFormSubmit}>
+        <Input
+          name="email"
+          type="email"
+          placeholder="이메일"
+          value={state.email}
+          onChange={(e) => dispatch({ type: 'SET_EMAIL', payload: e.target.value })}
+          className="p-2 border border-gray-300 rounded"
+        />
+        <Input
+          name="password"
+          type="password"
+          placeholder="비밀번호"
+          value={state.password}
+          onChange={(e) => dispatch({ type: 'SET_PASSWORD', payload: e.target.value })}
+          className="p-2 border border-gray-300 rounded"
+        />
+        <Button
+          type="submit"
+          label="로그인"
+          className="bg-white text-gray-800 border border-gray-800 p-2 rounded hover:bg-gray-200 transition"
+        />
       </form>
-      {error && <div className={styles.error}>{error}</div>}
-      <div className={styles.socialLogin}>
-        <Button label="Google로 로그인" onClick={() => {}} className={styles.socialButton} />
-        <Button label="Facebook으로 로그인" onClick={() => {}} className={styles.socialButton} />
-      </div>
-      <div className={styles.findInfo}>비밀번호를 잊으셨나요?</div>
-      <div className={styles.signupLink}>
+      {loading && <div className="text-center text-gray-600">Loading...</div>}
+      {state.error && <div className="text-red-600 text-sm mt-2">{state.error}</div>}
+      <div className="text-center mt-4">
         <span>아직 계정이 없으신가요? </span>
-        <Link href="/signup" className={styles.signupText}>
-          회원가입
-        </Link>
+        <Link href="/signup" className="underline cursor-pointer text-blue-500">회원가입</Link>
       </div>
     </div>
   );
