@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import axios, { AxiosError } from 'axios';
@@ -35,7 +35,9 @@ const reducer = (state: State, action: Action): State => {
 };
 
 const login = async (email: string, password: string) => {
-  const response = await axios.post('http://localhost:8000/login', { email, password });
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, { email, password });
+  const { access_token } = response.data;
+  localStorage.setItem('accessToken', access_token);
   return response.data;
 };
 
@@ -44,16 +46,41 @@ const Login: React.FC = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  // 로그인 상태 확인 및 리다이렉션
+  useEffect(() => {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+      router.push('/main');
+    }
+  }, [router]);
+
   const handleSubmit = async () => {
     try {
       const user = await login(state.email, state.password);
       alert('로그인 성공!');
+      
+      // JWT 저장
+      if (user.access_token) {
+        localStorage.setItem('accessToken', user.access_token);
+      }
+      
       sessionStorage.setItem('isLoggedIn', 'true');
       sessionStorage.setItem('userRole', user.role);
-      router.push('/main');
+      
+      // 리다이렉션 URL 처리
+      const redirectUrl = router.query.redirect || '/main';
+      router.push(redirectUrl as string);
     } catch (error) {
-      const err = error as AxiosError<{ detail: string }>; // AxiosError의 제네릭 타입을 사용하여 detail 속성 정의
-      const errorMessage = err.response?.data?.detail || '로그인에 실패했습니다. 다시 시도해주세요.';
+      const err = error as AxiosError<{ detail: string }>;
+      let errorMessage = '로그인에 실패했습니다. 다시 시도해주세요.';
+      
+      // 에러 종류에 따른 메시지 구분
+      if (!err.response) {
+        errorMessage = '네트워크 오류가 발생했습니다. 인터넷 연결을 확인하세요.';
+      } else if (err.response.status === 400) {
+        errorMessage = err.response.data.detail || errorMessage;
+      }
+      
       dispatch({
         type: 'SET_ERROR',
         payload: errorMessage,

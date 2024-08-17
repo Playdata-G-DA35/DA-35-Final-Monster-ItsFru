@@ -25,8 +25,6 @@ const Main: React.FC = () => {
         <div className={styles.buttonContainer}>
             <Button label="매장 정보" onClick={() => router.push('/store-info')} />
             <Button label="과일 고르기" onClick={() => router.push('/fruit-select')} />
-            <Button label="QR 리더" onClick={() => router.push('/qr-reader')} />
-            <Button label="가까운 매장 찾기" onClick={() => router.push('/store-map')} />
             <Button label="장바구니" onClick={() => router.push('/cart')} />
             <Button label="마이 페이지" onClick={() => router.push('/profile')} />
             <Button label="로그아웃" onClick={() => router.push('/login')} />

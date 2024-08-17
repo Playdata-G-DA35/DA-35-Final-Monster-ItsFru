@@ -1,27 +1,30 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.responses import JSONResponse
+from api.endpoints import auth
+import os
 
 app = FastAPI()
+
+# 환경 변수에서 CORS 설정 가져오기
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*").split(",")
 
 # CORS 설정 추가
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 모든 도메인 허용 (개발 환경에서만 사용)
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],  # 모든 HTTP 메서드 허용
-    allow_headers=["*"],  # 모든 헤더 허용
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-class User(BaseModel):
-    email: str
-    password: str
+# 전역 예외 처리기
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"message": exc.detail},
+    )
 
-@app.post("/login")
-async def login(user: User):
-    if user.email == "test@example.com" and user.password == "password":
-        return {"role": "user"}
-    raise HTTPException(status_code=400, detail="Invalid credentials")
-
-# FastAPI 서버 실행
-# 터미널에서 다음 명령어로 서버를 실행합니다: uvicorn main:app --reload
+# 라우터 등록 (prefix 제거)
+app.include_router(auth.router)

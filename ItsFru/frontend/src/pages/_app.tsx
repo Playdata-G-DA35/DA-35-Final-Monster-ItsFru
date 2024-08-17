@@ -1,15 +1,18 @@
+// src/pages/_app.tsx
 import React from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import 'tailwindcss/tailwind.css';
 import '@styles/globals.css';
 import { Layout } from '../components';
+import { StoreProvider } from '../contexts/StoreContext'; // StoreProvider import
+import StoreStatus from '../components/StoreStatus'; // Updated import for StoreStatus
 
 const ItsFru = ({ Component, pageProps, router }: AppProps) => {
     const isLandingPage = router.pathname === '/';
 
     return (
-        <>
+        <StoreProvider> {/* Wrap the application with StoreProvider */}
             <Head>
                 <title>ItsFru - 무인 과일 매장</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,10 +26,11 @@ const ItsFru = ({ Component, pageProps, router }: AppProps) => {
                 ) : (
                     <Layout>
                         <Component {...pageProps} />
+                        <StoreStatus /> {/* Include StoreStatus component if needed */}
                     </Layout>
                 )}
             </div>
-        </>
+        </StoreProvider>
     );
 };
 
