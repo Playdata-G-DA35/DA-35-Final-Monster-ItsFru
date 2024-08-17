@@ -1,0 +1,1 @@
+// 매장 미선택시 qr-reader와 store-map으로 연결해주게 함

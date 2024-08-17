@@ -1,4 +1,4 @@
-// 매장 확인을 위한 QR 리더기 페이지
+// 매장 확인을 위한 QR 리더기 페이지 , 다시 만드는중
 import React from 'react';
 
 const QRReader: React.FC = () => {
