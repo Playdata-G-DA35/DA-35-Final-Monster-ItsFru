@@ -1,6 +1,4 @@
-// src/components/ErrorMessage.tsx
 import React from 'react';
-import styles from './ErrorMessage.module.css';
 
 interface ErrorMessageProps {
   message: string;
@@ -8,7 +6,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
   return (
-    <div className={styles.errorMessage}>
+    <div className="bg-green-500 text-white text-center py-2 rounded-md shadow-md">
       {message}
     </div>
   );

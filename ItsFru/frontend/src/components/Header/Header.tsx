@@ -1,17 +1,31 @@
 // src/components/Header.tsx
 import React from 'react';
 import Link from 'next/link';
-import styles from './header.module.css'; // 스타일을 위한 CSS 모듈
+import Image from 'next/image';
+import { useStore } from '@contexts/StoreContext';
 
 const Header: React.FC = () => {
+  const { currentStore } = useStore();
+
   return (
-    <header className={styles.header}>
-      <div className={styles.left}>
-        <Link href="/main" className={styles.link}>메인화면</Link>
+    <header className="flex items-center justify-between bg-[#e0f7e9] p-4 shadow-md">
+      <div className="flex items-center">
+        <Link href="/main" className="flex items-center">
+          <Image
+            src="/images/logo-original.png"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="cursor-pointer"
+          />
+        </Link>
       </div>
-      <div className={styles.right}>
-        <Link href="/" className={styles.link}>마이페이지</Link>
-        <Link href="/" className={styles.link}>로그아웃</Link>
+      <div className="flex items-center space-x-4">
+        {currentStore && (
+          <span className="text-green-700 font-semibold">
+            {currentStore.name}
+          </span>
+        )}
       </div>
     </header>
   );

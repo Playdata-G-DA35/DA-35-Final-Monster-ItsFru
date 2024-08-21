@@ -1,26 +1,20 @@
-// Input.tsx (또는 Input 컴포넌트가 정의된 파일)
+import React from 'react';
 
-import React, { ChangeEvent } from 'react';
-
-interface InputProps {
-  name: string;
-  type: string;
-  placeholder: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  className?: string; // className 속성 추가
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
 }
 
-const Input: React.FC<InputProps> = ({ name, type, placeholder, value, onChange, className }) => {
+const Input: React.FC<InputProps> = ({ label, error, ...props }) => {
   return (
-    <input
-      name={name}
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      className={className} // className 적용
-    />
+    <div>
+      {label && <label className="block text-sm font-medium">{label}</label>}
+      <input
+        className="mt-1 block w-full px-3 py-2 border border-green-500 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 bg-green-100 text-black"
+        {...props}
+      />
+      {error && <span className="text-red-500 text-sm">{error}</span>}
+    </div>
   );
 };
 

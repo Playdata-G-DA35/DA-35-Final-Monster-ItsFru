@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from api.endpoints import auth
-from app.services.recognition_service import predict
+from api.endpoints import auth, user  # user 모듈 import
+from services.recognition_service import predict
 import os
 
 app = FastAPI()
@@ -27,8 +27,9 @@ async def http_exception_handler(request, exc):
         content={"message": exc.detail},
     )
 
-# 라우터 등록 (prefix 제거)
+# 라우터 등록
 app.include_router(auth.router)
+app.include_router(user.router)  # user 라우터 등록
 
 # /predict/ 엔드포인트 추가
 @app.post("/predict/")

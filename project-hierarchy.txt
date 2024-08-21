@@ -1,0 +1,89 @@
+DA-35-Final-Monster-ItsFru
+├─ ItsFru
+│  ├─ backend
+│  │  └─ app
+│  │     ├─ api
+│  │     │  ├─ crud.py
+│  │     │  ├─ dependencies.py
+│  │     │  ├─ endpoints
+│  │     │  │  ├─ auth.py
+│  │     │  │  ├─ products.py
+│  │     │  │  ├─ store.py
+│  │     │  │  └─ user.py
+│  │     │  ├─ models.py
+│  │     │  └─ schemas.py
+│  │     ├─ core
+│  │     │  ├─ aws_rds.py
+│  │     │  ├─ aws_s3.py
+│  │     │  └─ config.py
+│  │     ├─ db
+│  │     │  ├─ base.py
+│  │     │  └─ session.py
+│  │     ├─ main.py
+│  │     └─ services
+│  │        ├─ payment_service.py
+│  │        └─ recognition_service.py
+│  ├─ frontend
+│  │  ├─ public
+│  │  │  ├─ favicon.ico
+│  │  │  ├─ icons
+│  │  │  │  └─ favicon.ico
+│  │  │  ├─ images
+│  │  │  │  ├─ map-icon.png
+│  │  │  │  └─ qr-code.png
+│  │  │  ├─ manifest.json
+│  │  │  ├─ service-worker.js
+│  │  │  └─ sw.js
+│  │  └─ src
+│  │     ├─ components
+│  │     │  ├─ Button
+│  │     │  ├─ Card
+│  │     │  ├─ ErrorMessage
+│  │     │  ├─ Footer
+│  │     │  ├─ Header
+│  │     │  ├─ Input
+│  │     │  ├─ Layout
+│  │     │  ├─ LogoutButton
+│  │     │  ├─ Modal
+│  │     │  ├─ Spinner
+│  │     │  └─ Tap
+│  │     ├─ contexts
+│  │     │  ├─ AuthContext.tsx
+│  │     │  ├─ CartContext.tsx
+│  │     │  └─ StoreContext.tsx
+│  │     ├─ pages
+│  │     │  ├─ about-me.tsx
+│  │     │  ├─ api
+│  │     │  │  └─ hello.ts
+│  │     │  ├─ cart.tsx
+│  │     │  ├─ checkout.tsx
+│  │     │  ├─ fruit-info.tsx
+│  │     │  ├─ fruit-select.tsx
+│  │     │  ├─ index.tsx
+│  │     │  ├─ login.tsx
+│  │     │  ├─ main.tsx
+│  │     │  ├─ profile.tsx
+│  │     │  ├─ purchase-history.tsx
+│  │     │  ├─ qr-reader.tsx
+│  │     │  ├─ signup.tsx
+│  │     │  ├─ store-info.tsx
+│  │     │  ├─ store-map.tsx
+│  │     │  ├─ store-select.tsx
+│  │     │  ├─ withdrawal.tsx
+│  │     │  ├─ _app.tsx
+│  │     │  └─ _document.tsx
+│  │     └─ styles
+│  │        └─ globals.css
+│  ├─ infra
+│  │  └─ scripts
+│  ├─ references
+│  └─ tests
+│     ├─ backend
+│     ├─ etc
+│     └─ frontend
+├─ local_test
+│  ├─ file_tree.txt
+│  ├─ filtered_tree.txt
+│  ├─ filter_tree.py
+│  └─ logo_design.py
+└─ project-hierarchy.txt

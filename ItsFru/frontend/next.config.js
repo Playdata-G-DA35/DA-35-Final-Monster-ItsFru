@@ -11,9 +11,9 @@ module.exports = withPWA({
   swcMinify: true,
   webpack: (config, { isServer, dev }) => {
     // 경로 별칭 설정 추가
-    config.resolve.alias['@components/*'] = path.join(__dirname, 'src/components/*');
+    config.resolve.alias['@components'] = path.join(__dirname, 'src/components');
     config.resolve.alias['@styles'] = path.join(__dirname, 'src/styles');
-    
+    config.resolve.alias['@contexts'] = path.join(__dirname, 'src/contexts');
     // 추가적인 Webpack 설정이 필요한 경우 여기에 추가
     return config;
   },

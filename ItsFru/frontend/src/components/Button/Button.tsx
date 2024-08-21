@@ -1,23 +1,31 @@
 import React from 'react';
-import styles from './Button.module.css';
 
 type ButtonProps = {
-  label: string;
-  onClick?: () => void; // onClick을 선택적으로 변경
+  label?: string; // 기존 label을 optional로 변경
+  children?: React.ReactNode; // children 속성 추가
+  onClick?: () => void;
   disabled?: boolean;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
 };
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false, className, type = 'button' }) => {
+const Button: React.FC<ButtonProps> = ({
+  label,
+  children,
+  onClick,
+  disabled = false,
+  className = '',
+  type = 'button',
+}) => {
   return (
     <button
       type={type}
-      className={`${styles.button} ${className}`}
-      onClick={onClick} // onClick이 선택적이므로 전달되지 않을 수도 있음
+      className={`py-2 px-4 rounded-md shadow-sm text-lg font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${className}`}
+      onClick={onClick}
       disabled={disabled}
+      aria-label={label}
     >
-      {label}
+      {children || label}
     </button>
   );
 };
